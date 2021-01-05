@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "166149135089",
+    "project_id": "gestiona-facil",
+    "storage_bucket": "gestiona-facil.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:166149135089:android:2cca50fdee9a21cd58e750",
+        "android_client_info": {
+          "package_name": "com.zfactorial.gestionafacil"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "166149135089-cur5nntplae4g0nbboq49k29mo5vrq9i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zfactorial.gestionafacil",
+            "certificate_hash": "0a055c3de0a916ab60916aee4719a1130da1abfe"
+          }
+        },
+        {
+          "client_id": "166149135089-gn7o4t9tore7kdq34ngoam3pupg18ogd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAj2dGwbn5HzRLQWh5GW6e5MQKm1AXRV80"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "166149135089-gn7o4t9tore7kdq34ngoam3pupg18ogd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
