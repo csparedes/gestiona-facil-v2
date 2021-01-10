@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gestionafacil_v2/src/models/kardex_existencia_model.dart';
-import 'package:gestionafacil_v2/src/models/kardex_ingreso_model.dart';
 import 'package:provider/provider.dart';
 
 import 'package:gestionafacil_v2/src/provider/inventario_provider.dart';

@@ -8,6 +8,7 @@ import 'package:gestionafacil_v2/src/models/kardex_ingreso_model.dart';
 
 class ComprasProvider with ChangeNotifier {
   final String _url = 'http://192.168.1.39:3000/api/kardexIngreso';
+  // final String _url = 'http://192.168.1.11:3000/api/kardexIngreso';
   String _compras = 'Compras';
 
   get compras {

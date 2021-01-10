@@ -1,50 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:gestionafacil_v2/src/models/producto_model.dart';
-import 'package:gestionafacil_v2/src/pages/productos/widgets/modal_widget.dart';
+import 'package:gestionafacil_v2/src/models/categoria_model.dart';
+import 'package:gestionafacil_v2/src/pages/productos/categoria/modal_categoria_widget.dart';
+import 'package:gestionafacil_v2/src/provider/categorias_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:gestionafacil_v2/src/provider/productos_provider.dart';
 
-class ProductosPage extends StatelessWidget {
+class CategoriaPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final producto = Provider.of<ProductosProvider>(context);
+    final categoriaProvider = Provider.of<CategoriaProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: Text('Productos'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.shop),
-            onPressed: () {
-              //Implementar la busqueda
-              Navigator.pushNamed(context, 'categoria');
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.find_in_page),
-            onPressed: () {
-              //Implementar la busqueda
-            },
-          )
-        ],
+        title: Text('Categorías'),
       ),
-      body: _mostrarBody(producto),
+      body: _mostrarBody(categoriaProvider),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () => Navigator.pushNamed(context, 'productoDetalle'),
+        onPressed: () {
+          Navigator.pushNamed(context, 'categoriaDetalle');
+        },
       ),
     );
   }
 
-  _mostrarBody(ProductosProvider producto) {
+  _mostrarBody(CategoriaProvider categoriaProvider) {
+    // categoria Provider
     return Center(
       child: Column(
         children: [
           FutureBuilder(
-            future: producto.cargarProducto(),
+            future: categoriaProvider.cargarCategorias(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (!snapshot.hasData) {
                 return Center(
@@ -59,7 +43,7 @@ class ProductosPage extends StatelessWidget {
                 );
               }
 
-              final List<ProductoModel> lista = snapshot.data;
+              final List<CategoriaModel> lista = snapshot.data;
 
               if (lista.length == 0) {
                 return Center(
@@ -71,13 +55,13 @@ class ProductosPage extends StatelessWidget {
                 child: ListView.builder(
                   itemBuilder: (_, i) {
                     return ListTile(
-                      title: Text(lista[i].proNombre),
+                      title: Text(lista[i].catNombre),
                       leading: Icon(Icons.face),
-                      subtitle: Text(lista[i].proCodigoBarras),
+                      subtitle: Text(lista[i].catDescripcion),
                       onTap: () {
                         showDialog(
                           context: context,
-                          builder: (_) => ModalWidget(lista[i]),
+                          builder: (_) => ModalCategoriaWidget(lista[i]),
                         );
                       },
                     );

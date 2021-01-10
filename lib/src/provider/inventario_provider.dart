@@ -7,6 +7,7 @@ import 'package:gestionafacil_v2/src/models/kardex_existencia_model.dart';
 
 class InventarioProvider with ChangeNotifier {
   final String _url = 'http://192.168.1.39:3000/api/kardexExistencia';
+  // final String _url = 'http://192.168.1.11:3000/api/kardexExistencia';
   String _inventario = 'Inventario';
 
   get inventario {

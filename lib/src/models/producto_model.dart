@@ -45,7 +45,8 @@ class ProductoModel {
         "proFoto": proFoto,
         "proEstado": proEstado,
         "tblCategoriumCatId": tblCategoriumCatId,
-        "tbl_categorium": tblCategorium.toJson(),
+        "tbl_categorium":
+            (tblCategorium == null) ? null : tblCategorium.toJson(),
       };
 }
 

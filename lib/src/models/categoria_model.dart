@@ -30,9 +30,9 @@ class CategoriaModel {
       );
 
   Map<String, dynamic> toJson() => {
-        "catId": catId,
+        "catId": catId.toString(),
         "catNombre": catNombre,
         "catDescripcion": catDescripcion,
-        "catEstado": catEstado,
+        "catEstado": catEstado.toString(),
       };
 }

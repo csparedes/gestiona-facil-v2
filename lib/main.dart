@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 
+import 'package:gestionafacil_v2/src/pages/productos/categoria/categoria_detalle_page.dart';
+import 'package:gestionafacil_v2/src/pages/productos/widgets/producto_detalle.dart';
+import 'package:gestionafacil_v2/src/pages/productos/categoria/categoria_page.dart';
 import 'package:gestionafacil_v2/src/pages/caducados/caducados_page.dart';
 import 'package:gestionafacil_v2/src/pages/compras/compras_page.dart';
 import 'package:gestionafacil_v2/src/pages/home/home_page.dart';
@@ -11,6 +14,7 @@ import 'package:gestionafacil_v2/src/pages/productos/productos_page.dart';
 import 'package:gestionafacil_v2/src/pages/ventas/nueva_venta_page.dart';
 import 'package:gestionafacil_v2/src/pages/ventas/ventas_page.dart';
 
+import 'package:gestionafacil_v2/src/provider/categorias_provider.dart';
 import 'package:gestionafacil_v2/src/provider/nueva_venta_provider.dart';
 import 'package:gestionafacil_v2/src/provider/caducados_provider.dart';
 import 'package:gestionafacil_v2/src/provider/compras_provider.dart';
@@ -35,6 +39,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => ComprasProvider()),
         ChangeNotifierProvider(create: (context) => CaducadosProvider()),
         ChangeNotifierProvider(create: (context) => NuevaVentaProvider()),
+        ChangeNotifierProvider(create: (context) => CategoriaProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -49,6 +54,9 @@ class MyApp extends StatelessWidget {
           'compras': (_) => ComprasPage(),
           'caducados': (_) => CaducadosPage(),
           'nuevaVenta': (_) => NuevaVentaPage(),
+          'productoDetalle': (_) => ProductoDetallePage(),
+          'categoria': (_) => CategoriaPage(),
+          'categoriaDetalle': (_) => CategoriaDetallePage(),
         },
       ),
     );

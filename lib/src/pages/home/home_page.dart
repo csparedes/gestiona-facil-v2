@@ -111,7 +111,7 @@ class HomePage extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [Text('Inventario')],
+                          children: [Text('Productos')],
                         ),
                       ),
                     ),

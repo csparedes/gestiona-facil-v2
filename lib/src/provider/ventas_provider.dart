@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 class VentasProvider with ChangeNotifier {
   String _ventas = 'Ventas';
   final String _url = 'http://192.168.1.39:3000/api/kardexSalida';
+  // final String _url = 'http://192.168.1.11:3000/api/kardexSalida';
 
   get ventas {
     return _ventas;
