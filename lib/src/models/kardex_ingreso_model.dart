@@ -14,54 +14,59 @@ class KardexIngresoModel {
   KardexIngresoModel({
     this.kiId,
     this.kiFechaIngreso,
+    this.kiFechaCaducidad,
     this.kiCantidad,
     this.kiValorUnitario,
     this.kiValorTotal,
     this.kiEstado,
     this.tblProductoProId,
-    this.tblProducto,
+    this.tblProductoIngreso,
   });
 
   int kiId;
   String kiFechaIngreso;
+  String kiFechaCaducidad;
   int kiCantidad;
   double kiValorUnitario;
-  int kiValorTotal;
+  double kiValorTotal;
   bool kiEstado;
   int tblProductoProId;
-  TblProducto tblProducto;
+  TblProductoIngreso tblProductoIngreso;
 
   factory KardexIngresoModel.fromJson(Map<String, dynamic> json) =>
       KardexIngresoModel(
         kiId: json["kiId"],
         kiFechaIngreso: json["kiFechaIngreso"],
+        kiFechaCaducidad: json["kiFechaCaducidad"],
         kiCantidad: json["kiCantidad"],
         kiValorUnitario: json["kiValorUnitario"].toDouble(),
-        kiValorTotal: json["kiValorTotal"],
+        kiValorTotal: json["kiValorTotal"].toDouble(),
         kiEstado: json["kiEstado"],
         tblProductoProId: json["tblProductoProId"],
-        tblProducto: TblProducto.fromJson(json["tbl_producto"]),
+        tblProductoIngreso: TblProductoIngreso.fromJson(json["tbl_producto"]),
       );
 
   Map<String, dynamic> toJson() => {
         "kiId": kiId,
         "kiFechaIngreso": kiFechaIngreso,
+        "kiFechaCaducidad": kiFechaCaducidad,
         "kiCantidad": kiCantidad,
         "kiValorUnitario": kiValorUnitario,
         "kiValorTotal": kiValorTotal,
         "kiEstado": kiEstado,
         "tblProductoProId": tblProductoProId,
-        "tbl_producto": tblProducto.toJson(),
+        "tbl_producto": tblProductoIngreso.toJson(),
       };
 }
 
-class TblProducto {
-  TblProducto({
+class TblProductoIngreso {
+  TblProductoIngreso({
     this.proId,
     this.proCodigoBarras,
     this.proNombre,
     this.proFoto,
     this.proEstado,
+    this.proPrecioVenta,
     this.tblCategoriumCatId,
   });
 
@@ -70,14 +75,17 @@ class TblProducto {
   String proNombre;
   String proFoto;
   bool proEstado;
+  double proPrecioVenta;
   int tblCategoriumCatId;
 
-  factory TblProducto.fromJson(Map<String, dynamic> json) => TblProducto(
+  factory TblProductoIngreso.fromJson(Map<String, dynamic> json) =>
+      TblProductoIngreso(
         proId: json["proId"],
         proCodigoBarras: json["proCodigoBarras"],
         proNombre: json["proNombre"],
         proFoto: json["proFoto"],
         proEstado: json["proEstado"],
+        proPrecioVenta: json["proPrecioVenta"].toDouble(),
         tblCategoriumCatId: json["tblCategoriumCatId"],
       );
 
@@ -87,6 +95,7 @@ class TblProducto {
         "proNombre": proNombre,
         "proFoto": proFoto,
         "proEstado": proEstado,
+        "proPrecioVenta": proPrecioVenta,
         "tblCategoriumCatId": tblCategoriumCatId,
       };
 }

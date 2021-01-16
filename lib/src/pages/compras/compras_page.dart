@@ -1,19 +1,24 @@
+// import 'dart:html';
+
 import 'package:flutter/material.dart';
+
 import 'package:gestionafacil_v2/src/models/kardex_ingreso_model.dart';
 import 'package:gestionafacil_v2/src/provider/compras_provider.dart';
+// import 'package:gestionafacil_v2/src/provider/productos_provider.dart';
 import 'package:provider/provider.dart';
 
 class ComprasPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final compras = Provider.of<ComprasProvider>(context);
+    // final productoProvider = Provider.of<ProductosProvider>(context);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text('Ventas'),
+        title: Text('Compras'),
         actions: [
           IconButton(
             icon: Icon(Icons.find_in_page),
@@ -25,7 +30,7 @@ class ComprasPage extends StatelessWidget {
         child: Column(
           children: [
             FutureBuilder(
-              future: compras.cargarKardexIngreso(),
+              future: compras.cargarKI(),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (!snapshot.hasData) {
                   return Center(
@@ -55,7 +60,7 @@ class ComprasPage extends StatelessWidget {
                         title: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(lista[i].tblProducto.proNombre),
+                            Text(lista[i].tblProductoIngreso.proNombre),
                             Text(lista[i].kiCantidad.toString()),
                           ],
                         ),
@@ -72,6 +77,12 @@ class ComprasPage extends StatelessWidget {
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, 'nuevaCompra');
+        },
+        child: Icon(Icons.add),
       ),
     );
   }

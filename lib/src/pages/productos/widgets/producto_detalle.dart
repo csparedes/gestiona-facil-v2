@@ -25,13 +25,27 @@ class _ProductoDetallePageState extends State<ProductoDetallePage> {
   File foto;
   String _textoBoton = 'Guardar';
   final picker = ImagePicker();
+  //Variables globales dropdown
+  String auxString;
+  int auxIdCat;
+
+  List<dynamic> listCategory = new List<dynamic>();
+  @override
+  void initState() {
+    // ProductosProvider.listaCategoriasDropReturn(listCategory);
+    // print('init: ' + listCategory.toString());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final ProductoModel prodData = ModalRoute.of(context).settings.arguments;
     final productoProvider = Provider.of<ProductosProvider>(context);
 
     // List<String> listaCategorias = productoProvider.listitaCategorias;
-    List listaCategorias = productoProvider.listitaCategorias;
+    productoProvider.listaCategoriasDrop();
+    // final listaCategorias = listCategory;
+    setState(() {});
     // print('build: ' + listaCategorias.toString());
     if (prodData != null) {
       producto = prodData;
@@ -64,9 +78,18 @@ class _ProductoDetallePageState extends State<ProductoDetallePage> {
                 //Aqui va cada elemento del formulario
                 _mostrarFoto(),
                 _mostrarNombre(),
+                SizedBox(
+                  height: 15,
+                ),
                 _mostrarCodigoBarras(productoProvider),
-                // _mostrarBotonEscaneo(productoProvider),
-                // _mostrarCategoria(productoProvider, listaCategorias),
+                _mostrarPrecioVenta(),
+                SizedBox(
+                  height: 15,
+                ),
+                (prodData == null)
+                    ? _mostrarCategoriaEstatica()
+                    : _mostrarCategoria(productoProvider),
+
                 _mostrarBoton(productoProvider),
                 // _containerPrueba(listaCategorias),
               ],
@@ -118,6 +141,11 @@ class _ProductoDetallePageState extends State<ProductoDetallePage> {
     //   onSaved: (value) => producto.proCodigoBarras = value,
     // );
     return Container(
+      padding: EdgeInsets.only(left: 16, right: 16),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.blue, width: 1),
+        borderRadius: BorderRadius.circular(20),
+      ),
       child: ListTile(
         title: (producto.proCodigoBarras != null)
             ? Text(producto.proCodigoBarras)
@@ -157,61 +185,77 @@ class _ProductoDetallePageState extends State<ProductoDetallePage> {
     //TODO Configurar la lógica de una venta
   }
 
-  _mostrarCategoria(ProductosProvider productosProvider, List listaCategorias) {
-    //   //TODO: Tratar con un combobox, y seleccionar el ID, no String
-    // productosProvider.
-    String auxString;
-    int auxIdCat;
-    // return DropdownButton(
-    //   value: auxString,
-    //   hint: Text('Seleccione...'),
-    //   icon: Icon(Icons.arrow_downward),
-    //   iconSize: 24,
-    //   elevation: 16,
-    //   style: TextStyle(color: Colors.blue),
-    //   underline: Container(
-    //     height: 2,
-    //     color: Colors.blue,
-    //   ),
-    //   onChanged: (value) {
-    //     setState(() {
-    //       // producto.tblCategorium.catNombre = value;
-    //       print('valueeeeee: ' + value.toString());
-    //       auxString = value;
-    //       auxIdCat = int.parse(value);
-    //       print(auxString);
-    //       print('ID:::' + auxIdCat.toString());
-    //     });
-    //   },
-    //   items: listaCategorias.map((value) {
-    //     print('Value:::::::::' + value['catNombre']);
-    //     return DropdownMenuItem(
-    //       value: value,
-    //       child: Text(value['catNombre'].toString()),
-    //     );
-    //   }).toList(),
-    // );
+  _mostrarCategoriaEstatica() {
+    return TextFormField(
+      initialValue: (producto.tblCategoriumCatId == null)
+          ? ''
+          : producto.tblCategoriumCatId.toString(),
+      textCapitalization: TextCapitalization.sentences,
+      decoration: InputDecoration(
+        labelText: 'Categoria',
+      ),
+      onSaved: (value) => producto.tblCategoriumCatId = int.parse(value),
+    );
+  }
 
-    return DropdownButton(
-      hint: Text('Indique la categoria del Producto'),
-      dropdownColor: Colors.blue[50],
-      elevation: 5,
-      icon: Icon(Icons.arrow_drop_down),
-      iconSize: 40.0,
-      isExpanded: true,
-      value: auxString,
-      onChanged: (value) {
-        setState(() {
-          auxString = value;
-          auxIdCat = int.parse(value);
-        });
-      },
-      items: listaCategorias.map((value) {
-        return DropdownMenuItem(
-          value: value['catId'],
-          child: Text(value['catNombre']),
+  _mostrarCategoria(ProductosProvider productosProvider) {
+    return FutureBuilder(
+      future: productosProvider.listaCategoriasDrop(),
+      builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
+        if (!snapshot.hasData) {
+          return Container(
+            child: Text('Sin Informacion'),
+          );
+        }
+        List<dynamic> lista = snapshot.data[0];
+        print('listasnapshot: ' + lista.toString());
+        return Container(
+          padding: EdgeInsets.only(left: 16, right: 16),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.blue, width: 1),
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: new DropdownButton(
+            hint: Text('Indique la categoria del Producto'),
+            dropdownColor: Colors.blue[30],
+            // elevation: 5,
+            icon: Icon(Icons.arrow_drop_down),
+            iconSize: 40.0,
+            isExpanded: true,
+            value: auxString,
+            underline: SizedBox(),
+            onChanged: (value) {
+              setState(() {
+                print('setstate ' + value.toString());
+                auxString = value['catNombre'].toString();
+                auxIdCat = int.parse(value['catId']);
+              });
+            },
+            items: lista.map((value) {
+              return DropdownMenuItem(
+                // value: value,
+                // child: Text(value['catNombre']),
+                value: value['catId'],
+                child: Text(value['catNombre']),
+              );
+            }).toList(),
+          ),
         );
-      }).toList(),
+      },
+    );
+  }
+
+  _mostrarPrecioVenta() {
+    return TextFormField(
+      initialValue: (producto.proPrecioVenta == null)
+          ? ''
+          : producto.proPrecioVenta.toString(),
+      textCapitalization: TextCapitalization.sentences,
+      keyboardType: TextInputType.number,
+      decoration: InputDecoration(
+        labelText: 'Precio de Venta',
+      ),
+      onSaved: (value) => producto.proPrecioVenta = double.parse(value),
     );
   }
 
@@ -250,6 +294,7 @@ class _ProductoDetallePageState extends State<ProductoDetallePage> {
       productoUpdate.proCodigoBarras = producto.proCodigoBarras;
       productoUpdate.proFoto = producto.proFoto;
       productoUpdate.proNombre = producto.proNombre;
+      productoUpdate.proPrecioVenta = producto.proPrecioVenta;
       productoUpdate.tblCategoriumCatId = producto.tblCategoriumCatId;
       productoUpdate.proEstado = true;
       productosProvider.agregarProducto(productoUpdate);
@@ -296,9 +341,9 @@ class _ProductoDetallePageState extends State<ProductoDetallePage> {
     });
   }
 
-  _containerPrueba(List<String> listaPrueba) {
-    return Container(
-      child: Text(listaPrueba.toString()),
-    );
-  }
+  // _containerPrueba(List<String> listaPrueba) {
+  //   return Container(
+  //     child: Text(listaPrueba.toString()),
+  //   );
+  // }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 class NuevaVentaProvider with ChangeNotifier {
-  List<String> _listaVenta = ['Primer Dato'];
+  List<String> _listaVenta = [];
   String _cadenaRespuesta = '';
   //stream
   final _productosController = new StreamController<List<String>>.broadcast();
@@ -33,6 +33,8 @@ class NuevaVentaProvider with ChangeNotifier {
   }
 
   Future<List<String>> getLista() async {
+    print(
+        '========================================\n' + _listaVenta.toString());
     return _listaVenta;
   }
 }

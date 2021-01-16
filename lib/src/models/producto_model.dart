@@ -16,6 +16,7 @@ class ProductoModel {
     this.proNombre,
     this.proFoto,
     this.proEstado,
+    this.proPrecioVenta,
     this.tblCategoriumCatId,
     this.tblCategorium,
   });
@@ -25,6 +26,7 @@ class ProductoModel {
   String proNombre;
   String proFoto;
   bool proEstado;
+  double proPrecioVenta;
   int tblCategoriumCatId;
   TblCategorium tblCategorium;
 
@@ -34,6 +36,7 @@ class ProductoModel {
         proNombre: json["proNombre"],
         proFoto: json["proFoto"],
         proEstado: json["proEstado"],
+        proPrecioVenta: double.parse(json["proPrecioVenta"].toString()),
         tblCategoriumCatId: json["tblCategoriumCatId"],
         tblCategorium: TblCategorium.fromJson(json["tbl_categorium"]),
       );
@@ -44,6 +47,7 @@ class ProductoModel {
         "proNombre": proNombre,
         "proFoto": proFoto,
         "proEstado": proEstado,
+        "proPrecioVenta": proPrecioVenta,
         "tblCategoriumCatId": tblCategoriumCatId,
         "tbl_categorium":
             (tblCategorium == null) ? null : tblCategorium.toJson(),

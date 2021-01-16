@@ -71,7 +71,13 @@ class ProductosPage extends StatelessWidget {
                 child: ListView.builder(
                   itemBuilder: (_, i) {
                     return ListTile(
-                      title: Text(lista[i].proNombre),
+                      title: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(lista[i].proNombre),
+                          Text('PVP: ' + lista[i].proPrecioVenta.toString())
+                        ],
+                      ),
                       leading: Icon(Icons.face),
                       subtitle: Text(lista[i].proCodigoBarras),
                       onTap: () {

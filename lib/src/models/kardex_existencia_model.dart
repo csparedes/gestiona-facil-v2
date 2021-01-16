@@ -26,10 +26,10 @@ class KardexExistenciaModel {
   String keFechaCaducidad;
   int keCantidad;
   double keValorUnitario;
-  int keValorTotal;
+  double keValorTotal;
   bool keEstado;
   int tblProductoProId;
-  TblProducto tblProducto;
+  TblProductoExistencia tblProducto;
 
   factory KardexExistenciaModel.fromJson(Map<String, dynamic> json) =>
       KardexExistenciaModel(
@@ -37,10 +37,10 @@ class KardexExistenciaModel {
         keFechaCaducidad: json["keFechaCaducidad"],
         keCantidad: json["keCantidad"],
         keValorUnitario: json["keValorUnitario"].toDouble(),
-        keValorTotal: json["keValorTotal"],
+        keValorTotal: json["keValorTotal"].toDouble(),
         keEstado: json["keEstado"],
         tblProductoProId: json["tblProductoProId"],
-        tblProducto: TblProducto.fromJson(json["tbl_producto"]),
+        tblProducto: TblProductoExistencia.fromJson(json["tbl_producto"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -51,12 +51,14 @@ class KardexExistenciaModel {
         "keValorTotal": keValorTotal,
         "keEstado": keEstado,
         "tblProductoProId": tblProductoProId,
-        "tbl_producto": tblProducto.toJson(),
+        "tbl_producto": tblProducto == null
+            ? new TblProductoExistencia()
+            : tblProducto.toJson(),
       };
 }
 
-class TblProducto {
-  TblProducto({
+class TblProductoExistencia {
+  TblProductoExistencia({
     this.proId,
     this.proCodigoBarras,
     this.proNombre,
@@ -72,7 +74,8 @@ class TblProducto {
   bool proEstado;
   int tblCategoriumCatId;
 
-  factory TblProducto.fromJson(Map<String, dynamic> json) => TblProducto(
+  factory TblProductoExistencia.fromJson(Map<String, dynamic> json) =>
+      TblProductoExistencia(
         proId: json["proId"],
         proCodigoBarras: json["proCodigoBarras"],
         proNombre: json["proNombre"],

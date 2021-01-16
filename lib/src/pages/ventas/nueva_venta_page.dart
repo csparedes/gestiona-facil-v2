@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 class NuevaVentaPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final productosProvider = Provider.of<NuevaVentaProvider>(context);
+    final kardexProvider = Provider.of<NuevaVentaProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Nueva Venta'),
@@ -22,14 +22,14 @@ class NuevaVentaPage extends StatelessWidget {
             ),
             // _listarProductos(context, productosProvider),
             // _listaProducto(context, productosProvider),
-            _productosVarios(productosProvider),
+            _mostrarKardexSalidas(kardexProvider),
           ],
         ),
       ),
       bottomSheet: _mostrarTotalVenta(),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.photo_camera),
-        onPressed: () => _escanearCodigo(context, productosProvider),
+        onPressed: () => _escanearCodigo(context, kardexProvider),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
@@ -48,20 +48,20 @@ class NuevaVentaPage extends StatelessWidget {
       productosProvider.cadenaRespuesta = futureString;
     } else {
       //TODO: Acomodar Snackbar
-      final snackBar =
-          SnackBar(content: Text('Intente nuevamente con el producto'));
-      Scaffold.of(context).showSnackBar(snackBar);
+      // final snackBar =
+      //     SnackBar(content: Text('Intente nuevamente con el producto'));
+      // Scaffold.of(context).showSnackBar(snackBar);
     }
 
     print('Future: ' + futureString);
     //TODO Configurar la lógica de una venta
   }
 
-  Widget _productosVarios(NuevaVentaProvider productosProvider) {
+  Widget _mostrarKardexSalidas(NuevaVentaProvider kardexProvider) {
     return Column(
       children: [
         FutureBuilder(
-          future: productosProvider.getLista(),
+          future: kardexProvider.getLista(),
           builder: (_, snapshot) {
             if (!snapshot.hasData) {
               return Center(

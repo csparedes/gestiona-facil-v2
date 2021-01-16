@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 // import 'package:gestionafacil_v2/src/models/categoria_get_model.dart';
+// import 'package:gestionafacil_v2/src/models/categoria_get_model.dart';
 // import 'package:gestionafacil_v2/src/models/categoria_model.dart';
 import 'package:gestionafacil_v2/src/models/producto_model%20_update.dart';
 
@@ -15,29 +16,11 @@ import 'package:http_parser/http_parser.dart';
 import 'package:gestionafacil_v2/src/models/producto_model.dart';
 
 class ProductosProvider with ChangeNotifier {
-  // List<int> _mostrarProductos = [1, 2, 3, 4, 5, 6];
-  List _listitaCategorias = new List();
-  // List<CategoriaGetModel> _listitaCategorias = [];
-
-  get listitaCategorias {
-    listaCategoriasDrop();
-    print('listita: del getter' + _listitaCategorias.toString());
-    return _listitaCategorias;
-  }
-
-  // set listitaCategorias(String cat) {
-  //   _listitaCategorias.add(cat);
-  //   notifyListeners();
-  // }
+  List<dynamic> _listaCategorias = new List<dynamic>();
 
   final String _url = 'http://192.168.1.39:3000/api/productos';
   // final String _url = 'http://192.168.1.11:3000/api/productos';
   // final String _url = 'http://10.0.2.2:3000/api/productos';
-
-  // Map<String, String> _cabecera = {
-  //   "Accept": "*/*",
-  //   "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-  // };
 
   Future<String> subirImagen(File imagen) async {
     final url = Uri.parse(
@@ -93,6 +76,27 @@ class ProductosProvider with ChangeNotifier {
     });
     // notifyListeners();
     return listaProductos;
+  }
+
+  Future<String> cargarProductoCodigo(String codigo) async {
+    final url = '$_url/findCodigo/$codigo';
+
+    final consulta = await http.get(url);
+    print(consulta.body.toString());
+
+    final Map<String, dynamic> decodedData = jsonDecode(consulta.body);
+    if (decodedData == null) return null;
+
+    decodedData.forEach((key, value) {
+      if (key == "producto") {
+        // listaProductos.add(value);
+        print('value:' + value.toString());
+        print('value:' + value['proId'].toString());
+        return value['proId'];
+      }
+    });
+    // notifyListeners();
+    return null;
   }
 
   Future<bool> editarProducto(ProductoModelUpdate producto) async {
@@ -188,36 +192,70 @@ class ProductosProvider with ChangeNotifier {
     }
   }
 
-  void listaCategoriasDrop() async {
-    // List<String> lista = new List<String>();
+  // Future<List> listaCategoriasDrop() async {
+  //   List listaSalida = new List();
+  //   final resp = await http.get('http://192.168.1.39:3000/api/categoria/cat');
+  //   if (resp.statusCode == 200) {
+  //     final Map<String, dynamic> decodedData = jsonDecode(resp.body);
 
-    print('antes' + _listitaCategorias.toString());
+  //     decodedData.forEach((key, value) {
+  //       if (key == "categorias") {
+  //         print('decoded' + _listitaCategorias.toString());
 
+  //         // _listitaCategorias = value;
+  //         listaSalida = value;
+  //         // listitaCategorias = aux;
+  //         print('listita final' + _listitaCategorias.toString());
+  //       }
+  //     });
+  //   }
+  //   return listaSalida;
+  // }
+  Future<List<dynamic>> listaCategoriasDrop() async {
+    _listaCategorias.clear();
     final resp = await http.get('http://192.168.1.39:3000/api/categoria/cat');
-
-    print('en la consulta' + _listitaCategorias.toString());
-    print('en la consulta' + resp.body);
     if (resp.statusCode == 200) {
       final Map<String, dynamic> decodedData = jsonDecode(resp.body);
 
       decodedData.forEach((key, value) {
         if (key == "categorias") {
-          // listaProductos.add(value);
-          // final List<CategoriaGetModel> aux = value;
-          print('decoded' + _listitaCategorias.toString());
-          // final List aux = value;
-          // aux.forEach((e) {
-          //   // final temp = e.
-          //   print('eeeee' + e.toString());
-          //   _listitaCategorias.add(e);
-          //   print('despues' + _listitaCategorias.toString());
+          // print('cat: ' + value.toString());
+          _listaCategorias.add(value);
+          // List aux = value;
+          // aux.forEach((val) {
+          //   _listaCategorias.add(val['catNombre'].toString());
           // });
-          _listitaCategorias = value;
-
-          // listitaCategorias = aux;
-          print('listita final' + _listitaCategorias.toString());
         }
       });
     }
+    return _listaCategorias;
+  }
+
+  static void listaCategoriasDropReturn(List<dynamic> listaCategorias) async {
+    // listaCategorias.clear();
+
+    final resp = await http.get('http://192.168.1.39:3000/api/categoria/cat');
+    // if (resp.statusCode == 200) {
+    final Map<String, dynamic> decodedData = jsonDecode(resp.body);
+    // listaCategorias.add('loool');
+    decodedData.forEach((key, value) {
+      if (key == "categorias") {
+        listaCategorias.add(value);
+        List aux = value;
+        aux.forEach((val) {
+          print('cat1: ' + value.toString());
+          listaCategorias.add(val);
+          print('cat2: ' + listaCategorias.toString());
+        });
+      }
+    });
+    // }
+  }
+
+  List<String> obtenerListaCategorias() {
+    // _listaCategorias.clear();
+    // listaCategoriasDrop();
+
+    return _listaCategorias;
   }
 }

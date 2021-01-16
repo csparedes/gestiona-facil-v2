@@ -17,6 +17,7 @@ class ProductoModelUpdate {
     this.proNombre,
     this.proFoto,
     this.proEstado,
+    this.proPrecioVenta,
     this.tblCategoriumCatId,
   });
 
@@ -24,6 +25,7 @@ class ProductoModelUpdate {
   String proCodigoBarras;
   String proNombre;
   String proFoto;
+  double proPrecioVenta;
   bool proEstado;
   int tblCategoriumCatId;
 
@@ -34,6 +36,7 @@ class ProductoModelUpdate {
         proNombre: json["proNombre"],
         proFoto: json["proFoto"],
         proEstado: json["proEstado"],
+        proPrecioVenta: json["proPrecioVenta"],
         tblCategoriumCatId: json["tblCategoriumCatId"],
       );
 
@@ -52,6 +55,7 @@ class ProductoModelUpdate {
         "proNombre": proNombre,
         "proFoto": proFoto,
         "proEstado": proEstado.toString(),
+        "proPrecioVenta": proPrecioVenta.toString(),
         "tblCategoriumCatId": tblCategoriumCatId.toString(),
       };
 }

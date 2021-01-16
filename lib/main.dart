@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:gestionafacil_v2/src/provider/nueva_compra_provider.dart';
 import 'package:provider/provider.dart';
 
+import 'package:gestionafacil_v2/src/pages/compras/nueva_compra_page.dart';
 import 'package:gestionafacil_v2/src/pages/productos/categoria/categoria_detalle_page.dart';
 import 'package:gestionafacil_v2/src/pages/productos/widgets/producto_detalle.dart';
 import 'package:gestionafacil_v2/src/pages/productos/categoria/categoria_page.dart';
@@ -39,6 +41,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => ComprasProvider()),
         ChangeNotifierProvider(create: (context) => CaducadosProvider()),
         ChangeNotifierProvider(create: (context) => NuevaVentaProvider()),
+        ChangeNotifierProvider(create: (context) => NuevaCompraProvider()),
         ChangeNotifierProvider(create: (context) => CategoriaProvider()),
       ],
       child: MaterialApp(
@@ -54,6 +57,7 @@ class MyApp extends StatelessWidget {
           'compras': (_) => ComprasPage(),
           'caducados': (_) => CaducadosPage(),
           'nuevaVenta': (_) => NuevaVentaPage(),
+          'nuevaCompra': (_) => NuevaCompraPage(),
           'productoDetalle': (_) => ProductoDetallePage(),
           'categoria': (_) => CategoriaPage(),
           'categoriaDetalle': (_) => CategoriaDetallePage(),
